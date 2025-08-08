@@ -106,19 +106,19 @@ class APIclient:
             assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"
         return response.json()
 
-    def update_booking(self, booking_id, params=None):
+    def update_booking(self, booking_id, booking_data, params=None):
         with allure.step("updating booking"):
             url = f"{self.base_url}/{Endpoints.BOOKING_ENDPOINT}/{booking_id}"
-            response = self.session.put(url, params=params)
+            response = self.session.put(url, json=booking_data, params=params)
             response.raise_for_status()
         with allure.step("Checking status code"):
                 assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"
         return response.json()
 
-    def partial_update_booking(self, booking_id, params=None):
+    def partial_update_booking(self, booking_id, booking_data, params=None):
         with allure.step("updating booking"):
             url = f"{self.base_url}/{Endpoints.BOOKING_ENDPOINT}/{booking_id}"
-            response = self.session.patch(url, params=params)
+            response = self.session.patch(url, booking_data, params=params)
             response.raise_for_status()
         with allure.step("Checking status code"):
                 assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"
