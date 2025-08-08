@@ -109,18 +109,7 @@ class APIclient:
     def update_booking(self, booking_id, params=None):
         with allure.step("updating booking"):
             url = f"{self.base_url}/{Endpoints.BOOKING_ENDPOINT}/{booking_id}"
-            payload = {
-                "firstname": "James",
-                "lastname": "Brown",
-                "totalprice": 111,
-                "depositpaid": True,
-                "bookingdates": {
-                    "checkin": "2018-01-01",
-                    "checkout": "2019-01-01"
-                },
-                "additionalneeds": "Breakfast"
-            }
-            response = self.session.put(url, json=payload, params=params)
+            response = self.session.put(url, params=params)
             response.raise_for_status()
         with allure.step("Checking status code"):
                 assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"
@@ -129,11 +118,7 @@ class APIclient:
     def partial_update_booking(self, booking_id, params=None):
         with allure.step("updating booking"):
             url = f"{self.base_url}/{Endpoints.BOOKING_ENDPOINT}/{booking_id}"
-            payload = {
-                "firstname" : "James",
-                "lastname" : "Brown"
-            }
-            response = self.session.patch(url, json=payload, params=params)
+            response = self.session.patch(url, params=params)
             response.raise_for_status()
         with allure.step("Checking status code"):
                 assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"
