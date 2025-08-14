@@ -4,6 +4,7 @@ import requests
 import os
 from dotenv import load_dotenv
 from requests.auth import HTTPBasicAuth
+import json
 
 from core.settings.environments import Environment
 from core.clients.endpoints import Endpoints
@@ -56,13 +57,13 @@ class APIclient:
             response.raise_for_status()
         with allure.step("Assert status code"):
             assert response.status_code == 201, f"Expected status 201 but got {response.status_code}"
-            return response.status_code
+        return response.status_code
 
     def auth(self):
-        with allure.step("Setting authenticate"):
-            url = f"{self.base_url},{Endpoints.AUTH_ENDPOINT.value}"
-            payload = {"username": Users.USERNAME, "password": Users.PASSWORD}
-            response = self.session.post(url, json=payload, timeout=Timeouts.TIMEOUT)
+        with allure.step("Getting authenticate"):
+            url = f"{self.base_url}{Endpoints.AUTH_ENDPOINT.value}"
+            payload = {"username": Users.USERNAME.value, "password": Users.PASSWORD.value}
+            response = self.session.post(url, json=payload, timeout=Timeouts.TIMEOUT.value)
             response.raise_for_status()
         with allure.step("Checking status code"):
             assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"
@@ -91,7 +92,7 @@ class APIclient:
     def create_booking(self, booking_data):
         with allure.step("Creating booking"):
             url = f"{self.base_url}{Endpoints.BOOKING_ENDPOINT.value}"
-            response = self.session.post(url, json=booking_data)
+            response = self.session.post(url, headers=self.session.headers, json=booking_data)
             response.raise_for_status()
         with allure.step("Checking status code"):
             assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"
@@ -99,7 +100,7 @@ class APIclient:
 
     def get_booking_ids(self, params=None):
         with allure.step("getting objects booking by id"):
-            url = f"{self.base_url}/{Endpoints.BOOKING_ENDPOINT.value}"
+            url = f"{self.base_url}{Endpoints.BOOKING_ENDPOINT.value}"
             response = self.session.get(url, params=params)
             response.raise_for_status()
         with allure.step("Checking status code"):

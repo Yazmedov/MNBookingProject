@@ -13,6 +13,7 @@ def api_client():
     client.auth()
     return client
 
+
 @pytest.fixture
 def booking_dates():
     today = datetime.today()
@@ -22,6 +23,7 @@ def booking_dates():
         "checkin": checkin_date.strftime("%Y-%m-%d"),
         "checkout": checkout_date.strftime("%Y-%m-%d")
     }
+
 
 @pytest.fixture()
 def generate_random_booking_data(booking_dates):
@@ -33,13 +35,11 @@ def generate_random_booking_data(booking_dates):
     additionalneeds = faker.sentence()
 
     data = {
-    "firstname" : firstname,
-    "lastname" : lastname,
-    "totalprice" : totalprice,
-    "depositpaid" : depositpaid,
-    "bookingdates" : booking_dates,
-    "additionalneeds" : additionalneeds
+        "firstname": firstname,
+        "lastname": lastname,
+        "totalprice": totalprice,
+        "depositpaid": depositpaid,
+        "bookingdates": booking_dates,
+        "additionalneeds": additionalneeds
     }
     return data
-
-
