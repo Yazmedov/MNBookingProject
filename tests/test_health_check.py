@@ -59,4 +59,3 @@ def test_ping_timeout(api_client, mocker):
     with pytest.raises(requests.Timeout):
         api_client.ping()
 
-
