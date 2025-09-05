@@ -27,9 +27,9 @@ pipeline {
                     includeProperties: false,
                     jdk: '',
                     results: [[path: 'allure-results']]
-                ])
+                    ])
+                }
             }
-        }
 
     post {
         always {
@@ -41,6 +41,4 @@ pipeline {
             echo 'The build failed!'
         }
     }
-}
-
 
